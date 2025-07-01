@@ -1,1 +1,110 @@
+// miscellaneous definitions
+def traverse():
+	move(North)
+	if get_pos_y() == 0:
+		move(East)
+def sprinkle():
+	if get_water() <= 0.75:
+		use_item(Items.Water)
+def tillsoil():
+	if get_ground_type() != Grounds.Soil:
+		till()
+def tillgrass():
+	if get_ground_type() != Grounds.Grassland:
+		till()
+def smartharvest():
+	if can_harvest():
+		harvest()
 
+// longer code blocks
+import misc
+def bush(): #plant harvest bush
+	misc.smartharvest()
+	plant(Entities.Bush)
+	misc.traverse()
+def grass(): #plant harvest grass
+
+	misc.smartharvest()
+	misc.tillgrass()
+	misc.traverse()
+def carrots(): #plant harvest carrot
+
+	misc.sprinkle()
+	misc.smartharvest()
+	misc.tillsoil()			
+	plant(Entities.Carrot)
+	misc.traverse()
+def trees(): #plant harvest tree
+
+	misc.sprinkle()
+	misc.smartharvest()
+	misc.tillsoil()
+	if (get_pos_x() + get_pos_y()) % 2 == 1: 
+		plant(Entities.Tree) 
+	else:
+		misc.tillgrass()
+		misc.smartharvest()
+		plant(Entities.bush)
+	misc.traverse()
+def pumpkin(): #plant harvest big pumpkin
+	a=0
+	for i in range(get_world_size()):
+		for j in range(get_world_size()):
+			misc.sprinkle()
+			misc.tillsoil()
+			if get_entity_type() == Entities.Pumpkin and can_harvest():
+				b = 1
+			else:
+				misc.smartharvest()
+				plant(Entities.Pumpkin)
+				b = 0
+			a = a + b #adds all fuly grown pumpkins
+			misc.traverse()
+			quick_print(a)
+			if a == get_world_size()**2: #harvest if all pumpkin fully grown
+				harvest()
+def sunnies(): #plant harvest most petal sunflowers
+	Mpetals = 0
+	xpos = 0
+	ypos = 0
+	lpetals = []
+	lxpos = []
+	lypos = []
+	for y in range(get_world_size()):
+		for x in range(get_world_size()):
+			misc.sprinkle()
+			if can_harvest() and get_entity_type() != Entities.Sunflower:
+				harvest()
+			misc.tillsoil()			
+			plant(Entities.Sunflower)
+			if measure() >= Mpetals:
+				Mpetals = measure()
+				xpos = get_pos_x()
+				ypos = get_pos_y()
+			if Mpetals == measure():
+				lpetals.insert(0, Mpetals)
+				lxpos.insert(0, xpos)
+				lypos.insert(0, ypos)
+			quick_print(lpetals, lxpos, lypos)			
+			misc.traverse()
+	for index in lpetals:	
+		dxpos = lxpos[0] - get_pos_x()
+		dypos = lypos[0] - get_pos_y()
+		for y in range(dypos):
+			move(North)
+		if dypos < 0:
+			ddypos = dypos * -1
+			for y in range(ddypos):
+				move(South)
+		for x in range(dxpos):
+			move(East)
+		if dxpos < 0:
+			ddxpos = dxpos * -1
+			for x in range(ddxpos):
+				move(West)
+		misc.smartharvest()
+		plant(Entities.Sunflower)
+		lxpos.pop(0)
+		lypos.pop(0)
+		lpetals.pop(0)
+		Mpetals = 7
