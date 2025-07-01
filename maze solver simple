@@ -1,0 +1,17 @@
+directions = [North, East, South, West]
+index = 0
+plant(Entities.Bush)
+use_item(Items.Weird_Substance, get_world_size())
+while True:
+
+	if get_entity_type() == Entities.Treasure:
+		harvest()
+		plant(Entities.Bush)
+		use_item(Items.Weird_Substance, get_world_size())
+	else:
+		if move(directions[index]) == True:
+			index = (index - 1) % 4
+		elif move(directions[index]) == False:
+			index = (index + 1) % 4
+		elif move(directions[index]) == False:
+			index = (index + 1) % 4
