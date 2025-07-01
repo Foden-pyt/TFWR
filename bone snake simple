@@ -1,0 +1,19 @@
+for x in range(get_world_size()):
+		for y in range(get_world_size()-1):
+			move(North)
+		move(East)
+		for y in range(get_world_size()-2):
+			move(South)
+		move(East)
+	for x in range(get_world_size()-1):
+		x = get_pos_x()
+		y = get_pos_y()
+		move(West)
+	if get_pos_x() == x:
+		if get_pos_y() == y:
+			change_hat(Hats.Straw_Hat)
+			for y in range(get_pos_y()):
+				move(South)
+			for x in range(get_pos_x()):
+				move(West)
+			change_hat(Hats.Dinosaur_Hat)
