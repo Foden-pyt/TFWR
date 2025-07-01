@@ -1,0 +1,18 @@
+import misc
+while True:
+	a=0
+	for i in range(get_world_size()):
+		for j in range(get_world_size()):
+			misc.sprinkle()
+			misc.tillsoil()
+			if get_entity_type() == Entities.Pumpkin and can_harvest():
+				b = 1
+			else:
+				misc.smartharvest()
+				plant(Entities.Pumpkin)
+				b = 0
+			a = a + b #adds all fuly grown pumpkins
+			misc.traverse()
+	quick_print(a)
+	if a == get_world_size()**2: #harvest if all pumpkin fully grown
+		harvest()
