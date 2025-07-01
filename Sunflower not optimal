@@ -1,0 +1,45 @@
+import misc
+Mpetals = 0
+xpos = 0
+ypos = 0
+lpetals = []
+lxpos = []
+lypos = []
+index = len(lpetals)
+while True:
+	for y in range(get_world_size()):
+		for x in range(get_world_size()):
+			misc.sprinkle()
+			if can_harvest() and get_entity_type() != Entities.Sunflower:
+				harvest()
+			misc.tillsoil()			
+			plant(Entities.Sunflower)
+			if measure() >= Mpetals:
+				Mpetals = measure()
+				xpos, ypos = get_pos_x(), get_pos_y()
+			if Mpetals == measure():
+				lpetals.insert(0, Mpetals)
+				lxpos.insert(0, xpos)
+				lypos.insert(0, ypos)
+			quick_print(lpetals, lxpos, lypos)			
+			misc.traverse()
+	for index in lpetals:	
+		dxpos, dypos = lxpos[0] - get_pos_x(), lypos[0] - get_pos_y()
+		for y in range(dypos):
+			move(North)
+		if dypos < 0:
+			ddypos = abs(dypos)
+			for y in range(ddypos):
+				move(South)
+		for x in range(dxpos):
+			move(East)
+		if dxpos < 0:
+			ddxpos = abs(dxpos)
+			for x in range(ddxpos):
+				move(West)
+		misc.smartharvest()
+		plant(Entities.Sunflower)
+		lxpos.pop(0)
+		lypos.pop(0)
+		lpetals.pop(0)
+		Mpetals = 7
