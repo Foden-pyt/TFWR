@@ -1,4 +1,4 @@
-// miscellaneous definitions
+// miscellaneous definitions #misc
 def traverse():
 	move(North)
 	if get_pos_y() == 0:
@@ -16,7 +16,9 @@ def smartharvest():
 	if can_harvest():
 		harvest()
 
-// longer code blocks
+
+
+// longer code blocks #allcode
 import misc
 def bush(): #plant harvest bush
 	misc.smartharvest()
