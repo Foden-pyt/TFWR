@@ -1,0 +1,19 @@
+import allcode
+Grass = 5500
+Wood = 4000
+Carrots = 2200
+Pumpo = 5500
+Water = 1000
+Fert = 1000
+Sun = 2000
+while True:
+	if num_items(Items.Pumpkin) <= Pumpo:
+		allcode.pumpkin()
+	elif num_items(Items.Wood) <= Wood:
+		allcode.trees()
+	elif num_items(Items.Carrot) <= Carrots:
+		allcode.carrots()
+	elif num_items(Items.Hay) <= Grass:
+		allcode.grass()
+	elif num_items(Items.Power) <= Sun:
+		allcode.sunnies()
